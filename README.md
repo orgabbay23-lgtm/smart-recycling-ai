@@ -1,133 +1,120 @@
 # Smart Recycling and Food Waste Prevention System
 
-Final academic project in Computer Vision and Data Science for automated household waste sorting and food freshness detection.
+Final academic project proposal in Computer Vision and Data Science, focused on reducing household waste contamination and preventable food disposal.
 
-This system uses **custom-built CNN models trained from scratch** (including a ResNet-style variant implemented in-project) and does **not** rely on external vision APIs such as Google Vision or AWS Rekognition.
+## Current Status
 
-## Motivation and Environmental Impact
+This repository is currently in the **planning and design stage**.  
+It contains project specification, scope definition, and repository scaffolding.  
+**Implementation is in progress and has not yet been completed.**
 
-Households generate mixed waste streams where recyclable materials are frequently contaminated and discarded as landfill. In parallel, avoidable food waste is a major emissions source across production, transport, and decomposition stages. This project addresses both issues with one integrated vision platform:
+## Motivation and Environmental Context
 
-- **Waste classification** to support correct disposal behavior at the point of decision.
-- **Food freshness detection** to reduce premature disposal of edible food and improve consumption planning.
+Household-level waste handling remains a major challenge: recyclable items are often discarded incorrectly, and edible food is frequently thrown away due to uncertainty about freshness. These behaviors increase landfill pressure and environmental impact.
 
-The problem is aligned with UNEP-reported global waste and food-loss pressures, where better classification and prevention at the household level can reduce landfill load, methane emissions, and resource loss.
+This project is motivated by global sustainability concerns, including UNEP-reported trends in municipal waste generation and food waste. The objective is to design a practical AI-assisted decision tool that can support better disposal and consumption choices at home.
 
-## System Architecture
+## Project Goals
 
-The platform follows a **Client-Server architecture** designed for practical deployment and iterative model improvement.
+- Design a unified Computer Vision framework for:
+  - Waste material classification.
+  - Food freshness detection.
+- Build a reproducible ML pipeline suitable for academic evaluation.
+- Define measurable performance goals for future implementation:
+  - **Target accuracy**: >= 85% (per task, on held-out test data).
+  - **Target latency**: < 2 seconds end-to-end inference per request.
 
-### Runtime Flow
+These are intended targets, not current results.
 
-1. Client captures an image (waste item or food item) and sends it to the API.
-2. FastAPI backend validates request payload and dispatches inference pipeline.
-3. OpenCV performs image preprocessing (resize, normalization, augmentation parity checks).
-4. PyTorch model executes inference and returns class probabilities.
-5. Results and metadata are written to PostgreSQL for analytics and auditing.
-6. Raw images and model artifacts are stored in AWS S3 for traceability and retraining.
-7. Client receives prediction, confidence score, and action recommendation.
+## Planned System Architecture
 
-### Core Components
+The planned implementation follows a Client-Server architecture:
 
-- **Client layer**: mobile/web interface for image capture and user feedback.
-- **API layer (FastAPI)**: inference endpoints, model version routing, validation.
-- **ML layer (PyTorch + OpenCV)**: preprocessing, inference, evaluation utilities.
-- **Data layer (PostgreSQL)**: predictions, feedback labels, model version logs.
-- **Object storage (AWS S3)**: uploaded images, checkpoints, exported models, evaluation artifacts.
+1. Client application captures and uploads an image.
+2. Backend API (FastAPI) validates input and triggers inference.
+3. Image preprocessing is handled with OpenCV.
+4. Model inference is performed using PyTorch.
+5. Prediction metadata is stored in PostgreSQL.
+6. Image assets and model artifacts are stored in AWS S3.
 
-## Model Design
+Planned stack components:
 
-Two vision tasks are implemented with separate supervised pipelines:
+- **API**: FastAPI
+- **ML framework**: PyTorch
+- **Image processing**: OpenCV
+- **Database**: PostgreSQL
+- **Object storage**: AWS S3
 
-- **Waste model**: multi-class classification for household material categories.
-- **Freshness model**: multi-class/ordinal freshness state estimation for produce.
+## Planned Model Design
 
-### Architecture Strategy
+The modeling approach is planned as two supervised classification pipelines:
 
-- Baseline custom CNN with stacked convolutional blocks (`Conv -> BatchNorm -> ReLU -> Pool`).
-- ResNet-inspired architecture with residual connections to improve gradient flow and convergence stability.
-- Final fully connected head with dropout regularization and softmax outputs.
+- Waste category classifier.
+- Food freshness classifier.
 
-### Training Approach
+Planned architectural direction:
 
-- Models are **implemented and trained from scratch** in PyTorch.
-- No external inference APIs or pretrained cloud vision services are used.
-- Standardized train/validation/test split and fixed random seeds for reproducibility.
-- Checkpointing by best validation F1/accuracy with early stopping.
+- Custom CNN baseline (`Conv -> BatchNorm -> ReLU -> Pool` blocks).
+- ResNet-inspired variant with residual connections.
+- Models to be trained from scratch within this project scope (no external vision APIs).
 
-## Datasets Used
-
-- **Garbage Classification V2**: labeled household waste categories for supervised waste sorting.
-- **TACO (Trash Annotations in Context)**: real-world litter images for domain diversity and robustness.
-- **FruitVision**: food produce imagery used for freshness-stage classification.
-
-Dataset pipelines include class harmonization, imbalance analysis, augmentation policy, and consistent preprocessing across train and inference stages.
-
-## Model Evaluation
-
-Evaluation is performed per task and per class, not only at aggregate level.
-
-### Primary Metrics
+Planned evaluation metrics:
 
 - Accuracy
-- Precision (macro and weighted)
-- Recall (macro and weighted)
+- Precision
+- Recall
 - F1-score
-- Confusion matrix analysis for error localization
+- Confusion matrix analysis
 
-### Evaluation Protocol
+## Planned Datasets
 
-- Held-out test set evaluation after hyperparameter selection on validation set.
-- Confusion matrix inspection to detect systematic confusion (for example: plastic vs. metal, ripe vs. overripe).
-- Class-wise precision/recall used to guide targeted data collection and augmentation.
+The project intends to use the following datasets:
 
-## Performance Goals
+- **Garbage Classification V2**
+- **TACO (Trash Annotations in Context)**
+- **FruitVision**
 
-- **Prediction latency**: < 2 seconds end-to-end per request under nominal load.
-- **Model accuracy**: > 85% on held-out test data for both primary tasks.
-- **Service objective**: stable response quality under concurrent client requests.
+Final class mapping, preprocessing policy, and split strategy will be documented during implementation.
 
-## Technology Stack
+## Repository Structure
 
-- **Language**: Python
-- **Deep Learning**: PyTorch
-- **Image Processing**: OpenCV
-- **API Framework**: FastAPI
-- **Database**: PostgreSQL
-- **Storage**: AWS S3
-- **Experimentation**: Jupyter notebooks + scripted training/evaluation workflows
-- **Version Control and Reproducibility**: Git, deterministic splits/seeds, artifacted checkpoints
+Folders are currently prepared as project scaffolding for upcoming development outputs:
 
-## Project Structure and Layer Responsibilities
+- `backend/`: planned API service layer and inference orchestration code.
+- `datasets/raw/`: planned storage for original source datasets.
+- `datasets/processed/`: planned outputs of preprocessing and dataset preparation.
+- `models/checkpoints/`: future training checkpoint outputs.
+- `models/exported/`: future deployable model artifacts.
+- `experiments/logs/`: planned experiment tracking and metric logs.
+- `notebooks/`: exploratory analysis and research notebooks.
+- `scripts/`: planned automation scripts for training/evaluation workflows.
+- `docs/`: academic documentation and proposal materials.
 
-The repository is organized by functional responsibility, not only by file type:
+## Development Roadmap
 
-- `backend/`: service layer for FastAPI endpoints, request validation, inference orchestration, and integration with PostgreSQL/S3.
-- `datasets/raw/`: immutable source datasets before cleaning or relabeling.
-- `datasets/processed/`: model-ready tensors/images and split manifests produced by preprocessing pipelines.
-- `models/checkpoints/`: intermediate and best-performing training checkpoints used for recovery and comparison.
-- `models/exported/`: deployable model artifacts for inference services.
-- `experiments/logs/`: run-level training curves, metrics, and experiment diagnostics.
-- `notebooks/`: exploratory analysis, error analysis, and controlled prototyping before pipeline hardening.
-- `scripts/`: reproducible CLI pipelines for preprocessing, training, evaluation, and export.
-- `docs/`: academic documentation, proposal material, methodology notes, and reporting assets.
+1. Finalize requirements, class taxonomy, and evaluation protocol.
+2. Implement data ingestion and preprocessing pipeline.
+3. Implement baseline CNN and ResNet-inspired models.
+4. Run controlled experiments and compare model variants.
+5. Integrate selected model into FastAPI backend.
+6. Validate performance against project targets and document findings.
 
-## Future Work and Continuous Retraining Loop
+## Academic Scope
 
-The project roadmap includes a closed-loop learning lifecycle:
+This repository supports a university-level final project with emphasis on:
 
-1. Collect new inference samples and optional user-corrected labels.
-2. Validate and curate incoming data, then append to training pool.
-3. Retrain candidate models on scheduled cycles.
-4. Evaluate against the current production baseline using fixed benchmark sets.
-5. Promote only models that improve target metrics and do not regress critical classes.
-6. Deploy new model version and continue drift monitoring.
+- End-to-end system design for an applied Computer Vision problem.
+- Methodological rigor in dataset handling, model development, and evaluation.
+- Reproducibility, clear documentation, and evidence-based analysis of results.
 
-Planned extensions:
+At this stage, the repository should be interpreted as a proposal and development plan rather than a completed implementation.
 
-- Active learning for selecting high-value samples to label.
-- Domain adaptation for lighting/background variability in household environments.
-- Explainability support (saliency maps/class activation maps) for model transparency.
+## Getting Started
+
+```bash
+git clone https://github.com/orgabbay23-lgtm/smart-recycling-ai.git
+cd smart-recycling-ai
+```
 
 ## License
 
