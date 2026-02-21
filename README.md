@@ -9,3 +9,7 @@ Not started yet
 ## Repository Purpose
 
 This repository will contain the research, datasets, experiments, and models for our final academic project.
+
+## Documentation
+
+Project proposal can be found in the `docs` folder.
