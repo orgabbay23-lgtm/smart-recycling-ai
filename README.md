@@ -1,121 +1,128 @@
-# Smart Recycling and Food Waste Prevention System
+# ♻️ Smart Recycling & Food Waste Prevention System
 
-Final academic project proposal in Computer Vision and Data Science, focused on reducing household waste contamination and preventable food disposal.
+An AI-powered application that uses Computer Vision and Deep Learning to help users sort waste correctly and reduce food waste at home.
 
-## Current Status
+> **Project Status:** 📋 Planning & Design — architecture and models are defined, implementation has not started yet.
 
-This repository is currently in the **planning and design stage**.  
-It contains project specification, scope definition, and repository scaffolding.  
-**Implementation is in progress and has not yet been completed.**
+---
 
-## Motivation and Environmental Context
+## 📌 About the Project
 
-Household-level waste handling remains a major challenge: recyclable items are often discarded incorrectly, and edible food is frequently thrown away due to uncertainty about freshness. These behaviors increase landfill pressure and environmental impact.
+Household waste sorting is confusing — many recyclable materials end up in the wrong bin. At the same time, large amounts of food are thrown away simply because people can't tell if produce is still edible.
 
-This project is motivated by global sustainability concerns, including UNEP-reported trends in municipal waste generation and food waste. The objective is to design a practical AI-assisted decision tool that can support better disposal and consumption choices at home.
+This project aims to solve both problems with a single **web application** (accessible from any device with a browser — no app store needed) powered by custom-trained Convolutional Neural Networks (CNNs):
 
-## Project Goals
+1. **Waste Classification** — identify the material (plastic, glass, paper, etc.) and direct the user to the correct recycling bin.
+2. **Freshness Detection** — classify fruits and vegetables as Fresh, Half-Fresh, or Rotten, and suggest what to do with them (eat now, cook immediately, or compost).
 
-- Design a unified Computer Vision framework for:
-  - Waste material classification.
-  - Food freshness detection.
-- Build a reproducible ML pipeline suitable for academic evaluation.
-- Define measurable performance goals for future implementation:
-  - **Target accuracy**: >= 85% (per task, on held-out test data).
-  - **Target latency**: < 2 seconds end-to-end inference per request.
+### What Makes This Project Different
 
-These are intended targets, not current results.
+- **Built from scratch** — we train our own Deep Learning models using PyTorch rather than relying on commercial APIs (Google Lens, AWS Rekognition, etc.).
+- **Dual functionality** — combines recycling guidance with proactive food freshness detection in one app.
+- **Consumer-focused** — designed for everyday home use, not industrial conveyor belts.
 
-## Planned System Architecture
+---
 
-The planned implementation follows a Client-Server architecture:
+## 🏗️ Planned Architecture
 
-1. Client application captures and uploads an image.
-2. Backend API (FastAPI) validates input and triggers inference.
-3. Image preprocessing is handled with OpenCV.
-4. Model inference is performed using PyTorch.
-5. Prediction metadata is stored in PostgreSQL.
-6. Image assets and model artifacts are stored in AWS S3.
+The system follows a **Client-Server** design:
 
-Planned stack components:
+| Layer | Role | Planned Technology |
+|-------|------|--------------------|
+| **Web App** (Client) | Camera capture, UI, result display | React (Vite) + TailwindCSS |
+| **API Gateway** | Auth, validation, routing | FastAPI (Python) |
+| **Inference Service** | Image preprocessing + CNN prediction | PyTorch, OpenCV |
+| **Database** | User data, scan history | PostgreSQL |
+| **Image Storage** | Training dataset repository | AWS S3 |
 
-- **API**: FastAPI
-- **ML framework**: PyTorch
-- **Image processing**: OpenCV
-- **Database**: PostgreSQL
-- **Object storage**: AWS S3
+### Inference Flow (Planned)
 
-## Planned Model Design
-
-The modeling approach is planned as two supervised classification pipelines:
-
-- Waste category classifier.
-- Food freshness classifier.
-
-Planned architectural direction:
-
-- Custom CNN baseline (`Conv -> BatchNorm -> ReLU -> Pool` blocks).
-- ResNet-inspired variant with residual connections.
-- Models to be trained from scratch within this project scope (no external vision APIs).
-
-Planned evaluation metrics:
-
-- Accuracy
-- Precision
-- Recall
-- F1-score
-- Confusion matrix analysis
-
-## Planned Datasets
-
-The project intends to use the following datasets:
-
-- **Garbage Classification V2**
-- **TACO (Trash Annotations in Context)**
-- **FruitVision**
-
-Final class mapping, preprocessing policy, and split strategy will be documented during implementation.
-
-## Repository Structure
-
-Folders are currently prepared as project scaffolding for upcoming development outputs:
-
-- `backend/`: planned API service layer and inference orchestration code.
-- `datasets/raw/`: planned storage for original source datasets.
-- `datasets/processed/`: planned outputs of preprocessing and dataset preparation.
-- `models/checkpoints/`: future training checkpoint outputs.
-- `models/exported/`: future deployable model artifacts.
-- `experiments/logs/`: planned experiment tracking and metric logs.
-- `notebooks/`: exploratory analysis and research notebooks.
-- `scripts/`: planned automation scripts for training/evaluation workflows.
-- `docs/`: academic documentation and proposal materials.
-
-## Development Roadmap
-
-1. Finalize requirements, class taxonomy, and evaluation protocol.
-2. Implement data ingestion and preprocessing pipeline.
-3. Implement baseline CNN and ResNet-inspired models.
-4. Run controlled experiments and compare model variants.
-5. Integrate selected model into FastAPI backend.
-6. Validate performance against project targets and document findings.
-
-## Academic Scope
-
-This repository supports a university-level final project with emphasis on:
-
-- End-to-end system design for an applied Computer Vision problem.
-- Methodological rigor in dataset handling, model development, and evaluation.
-- Reproducibility, clear documentation, and evidence-based analysis of results.
-
-At this stage, the repository should be interpreted as a proposal and development plan rather than a completed implementation.
-
-## Getting Started
-
-```bash
-git clone https://github.com/orgabbay23-lgtm/smart-recycling-ai.git
-cd smart-recycling-ai
+```
+User scans item → App sends image → API validates →
+Inference Service preprocesses (OpenCV) → CNN predicts class + confidence →
+Result returned → App displays recommendation
 ```
 
-## License
+---
 
-This project is licensed under the MIT License. See `LICENSE` for details.
+## 🧠 Planned Model Details
+
+| Component | Architecture | Purpose |
+|-----------|-------------|---------|
+| Waste Classifier | ResNet / MobileNet (CNN) | Classify materials: plastic, glass, paper, metal, etc. |
+| Freshness Detector | ResNet / MobileNet (CNN) | Classify produce: Fresh, Half-Fresh, Rotten |
+
+### Training Datasets
+
+- [Garbage Classification V2](https://www.kaggle.com/datasets/sumn2u/garbage-classification-v2) — 19,762 images across 10 waste classes
+- [TACO Dataset](http://tacodataset.org/) — litter detection in real-world conditions
+- [Mendeley FruitVision](https://data.mendeley.com/datasets/xkbjx8959c/2) — fresh vs. rotten fruit images (apples, bananas, mangoes, oranges, grapes)
+
+---
+
+## 🎯 Performance Targets
+
+These are **goals**, not yet achieved results:
+
+| Metric | Target |
+|--------|--------|
+| Inference latency | < 2 seconds |
+| Freshness detection accuracy | ≥ 85% |
+| Backend concurrency | 100+ simultaneous requests |
+| System uptime | 99% |
+
+---
+
+## 📁 Repository Structure
+
+```
+smart-recycling-ai/
+├── backend/                  # Server-side code (planned)
+├── frontend/                 # React web app (planned)
+├── datasets/
+│   ├── raw/                  # Original dataset files
+│   └── processed/            # Preprocessed training data
+├── docs/                     # Project proposal and documentation
+├── experiments/
+│   └── logs/                 # Training logs and experiment tracking
+├── models/
+│   ├── checkpoints/          # Model checkpoints during training
+│   └── exported/             # Final exported models for inference
+├── notebooks/                # Jupyter notebooks for exploration
+├── scripts/                  # Utility and automation scripts
+├── .gitignore
+├── LICENSE
+├── README.md
+└── TODO.md
+```
+
+---
+
+## 🛠️ Tech Stack (Planned)
+
+**AI / ML:** Python, PyTorch, OpenCV  
+**Backend:** FastAPI, PostgreSQL  
+**Frontend:** React (Vite), TailwindCSS — responsive web app, works on any device via browser  
+**Infrastructure:** Docker, AWS (EC2, S3)  
+**Testing:** PyTest, Confusion Matrix evaluation, UAT in real conditions
+
+---
+
+## 👥 Team
+
+| Name | Role |
+|------|------|
+| Or Gabbay | Co-developer — model training, backend |
+| Daniel Yerichman | Co-developer — model training, backend |
+
+---
+
+## 📄 Documentation
+
+The full project proposal, literature review, requirements specification, and detailed design document are available in the [`docs/`](docs/) folder.
+
+---
+
+## 📜 License
+
+This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
