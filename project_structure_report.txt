@@ -1,0 +1,135 @@
+Project Structure Report
+Repository: C:\Users\ronng\OneDrive\מסמכים\GitHub\smart-recycling-ai
+Generated: 2026-03-11
+
+Notes:
+- This report reflects the repository's current contents.
+- Excluded clutter: .git, __pycache__, node_modules, .venv, venv, .DS_Store, and temporary/cache folders.
+- Dataset sections list folders only. Raw image filenames are omitted. Processed datasets are shown only down to split/class folders.
+
+Summary
+- Main application folders: backend/ (placeholder), frontend/ (placeholder), scripts/, models/, docs/ (placeholder), experiments/, notebooks/ (placeholder).
+- Dataset-related folders: datasets/waste/{raw,processed} and datasets/freshness/{raw,processed}.
+- Key script: scripts/prepare_mvp_datasets.py - prepares balanced train/val/test MVP datasets from the raw waste and FruitVision datasets.
+- Key documentation files: README.md, TODO.md, Final MVP.md, datasets/waste/processed/README.md, datasets/freshness/processed/README.md, datasets/waste/raw/garbage_classification_v2/README.md, datasets/freshness/raw/fruitvision/README.md.
+- Current implementation status: backend/frontend source files are not present yet, and models/ currently stores placeholder output folders rather than model code.
+
+Current Tree
+smart-recycling-ai/
+  .gitattributes
+  .gitignore
+  Final MVP.md
+  LICENSE
+  README.md
+  TODO.md
+  backend/
+    (placeholder only)
+  datasets/
+    freshness/
+      processed/
+        README.md
+        train/
+          fresh/
+          rotten/
+        val/
+          fresh/
+          rotten/
+        test/
+          fresh/
+          rotten/
+      raw/
+        fruitvision/
+          README.md
+          Apple/
+            Formalin-mixed/
+              Formalin-mixed/
+            Fresh/
+              Fresh/
+            Rotten/
+              Rotten/
+          Banana/
+            Formalin-mixed/
+              Formalin-mixed/
+            Fresh/
+              Fresh/
+            Rotten/
+              Rotten/
+          Grape/
+            Formalin-mixed/
+              Formalin-mixed/
+          Mango/
+            Formalin-mixed/
+              Formalin-mixed/
+          Orange/
+            Formalin-mixed/
+              Formalin-mixed/
+    waste/
+      processed/
+        README.md
+        train/
+          glass/
+          metal/
+          paper/
+          plastic/
+        val/
+          glass/
+          metal/
+          paper/
+          plastic/
+        test/
+          glass/
+          metal/
+          paper/
+          plastic/
+      raw/
+        garbage_classification_v2/
+          README.md
+          original/
+            battery/
+            biological/
+            cardboard/
+            clothes/
+            glass/
+            metal/
+            paper/
+            plastic/
+            shoes/
+            trash/
+          standardized_256/
+            battery/
+            biological/
+            cardboard/
+            clothes/
+            glass/
+            metal/
+            paper/
+            plastic/
+            shoes/
+            trash/
+          standardized_384/
+            battery/
+            biological/
+            cardboard/
+            clothes/
+            glass/
+            metal/
+            paper/
+            plastic/
+            shoes/
+            trash/
+  docs/
+    (placeholder only)
+  experiments/
+    logs/
+      (placeholder only)
+  frontend/
+    (placeholder only)
+  models/
+    checkpoints/
+      (placeholder only)
+    exported/
+      (placeholder only)
+  notebooks/
+    (placeholder only)
+  scripts/
+    prepare_mvp_datasets.py

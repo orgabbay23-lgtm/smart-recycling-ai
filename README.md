@@ -24,7 +24,7 @@ It focuses on **two main tasks**:
 | Feature | What it does | Output |
 |---|---|---|
 | ♻️ **Waste Classification** | Detects whether an item belongs to plastic, glass, paper, or metal | Predicted class + recycling recommendation |
-| 🥗 **Food Freshness Detection** | Detects whether food is fresh, half-fresh, or rotten | Freshness level + usage/disposal recommendation |
+| 🥗 **Food Freshness Detection** | Detects whether food is fresh or rotten | Freshness level + usage/disposal recommendation |
 
 > 💡 The goal is to build a clean academic prototype that demonstrates how machine learning can be applied to real-world sustainability problems.
 
@@ -35,7 +35,7 @@ It focuses on **two main tasks**:
 - Build a simple and understandable AI-based web application
 - Apply computer vision to a real-world environmental problem
 - Train image classification models for two practical tasks
-- Create a user-friendly interface for image upload and prediction
+- Create a user-friendly interface for camera capture and prediction
 - Present a complete end-to-end prototype suitable for an academic final project
 
 ---
@@ -43,7 +43,7 @@ It focuses on **two main tasks**:
 ## ✨ Core Features
 
 ### ♻️ Waste Classification
-The user uploads an image of a waste item, and the system predicts whether it is:
+The user captures an image of a waste item, and the system predicts whether it is:
 
 - Plastic
 - Glass
@@ -53,17 +53,16 @@ The user uploads an image of a waste item, and the system predicts whether it is
 After classification, the system displays the **recommended recycling bin**.
 
 ### 🥗 Food Freshness Detection
-The user uploads an image of food, and the system predicts whether it is:
+The user captures an image of food, and the system predicts whether it is:
 
 - Fresh
-- Half-Fresh
 - Rotten
 
 After prediction, the system displays a simple recommendation such as:
 
 - Safe to use
 - Use soon
-- Discard
+- Discard / Compost
 
 ---
 
@@ -79,7 +78,11 @@ After prediction, the system displays a simple recommendation such as:
 ### 🔄 High-Level Flow
 
 ```text
-User uploads image
+User opens scan page
+      ↓
+Frontend opens browser camera
+      ↓
+User captures one image
       ↓
 Frontend sends request to backend
       ↓
@@ -100,15 +103,162 @@ Frontend shows label + confidence + recommendation
 
 ---
 
-## 📁 Project Structure
+## 📌 Current MVP Scope
+
+The current MVP is intentionally small and focused.
+
+### Included in the current MVP
+
+* Two modes:
+
+  * Recycle Scan
+  * Freshness Scan
+* Camera-based capture in the browser
+* One-image-per-scan flow
+* Waste classes:
+
+  * Plastic
+  * Glass
+  * Paper
+  * Metal
+* Freshness classes:
+
+  * Fresh
+  * Rotten
+* Simple FastAPI backend with 2 prediction endpoints
+* Simple frontend pages for the demo
+
+### Not included in the current MVP
+
+* Login / authentication
+* Database
+* Scan history
+* Cloud image storage
+* Report incorrect result
+* Continuous live inference
+* Additional fruit types beyond Apple and Banana for training
+* Additional waste categories beyond the selected four classes
+
+---
+
+## 🗃️ Datasets
+
+The project uses publicly available image datasets relevant to the two target tasks.
+
+### ♻️ Waste Classification Dataset
+
+Selected dataset:
+
+* **Garbage Classification V2**
+
+Final MVP classes:
+
+* Plastic
+* Glass
+* Paper
+* Metal
+
+### 🥗 Food Freshness Dataset
+
+Selected dataset:
+
+* **Mendeley FruitVision**
+
+Final MVP scope:
+
+* Fruit types used for training:
+
+  * Apple
+  * Banana
+* Final labels:
+
+  * Fresh
+  * Rotten
+
+> 📚 The processed datasets are balanced subsets prepared specifically for the MVP.
+
+---
+
+## 🧪 Current Dataset Preparation Status
+
+The dataset preparation stage for the MVP has already been completed.
+
+### Completed
+
+* Raw dataset folders created and documented
+* Processed dataset folders created
+* Balanced subset selection implemented
+* `train / val / test` splits generated
+* Preprocessing script added:
+
+  * `scripts/prepare_mvp_datasets.py`
+
+### Processed dataset structure
+
+* `datasets/waste/processed/train|val|test/{plastic,glass,paper,metal}`
+* `datasets/freshness/processed/train|val|test/{fresh,rotten}`
+
+### Balancing logic
+
+* **Waste** is balanced using the smallest relevant waste class size
+* **Freshness** is balanced using the smallest subgroup among:
+
+  * Apple/Fresh
+  * Apple/Rotten
+  * Banana/Fresh
+  * Banana/Rotten
+
+This keeps the final freshness dataset balanced both:
+
+* across final classes (`fresh` / `rotten`)
+* and inside each class (`Apple` / `Banana`)
+
+---
+
+## 🧠 Model Development Plan
+
+The project uses **simple CNN-based image classification models** as a starting point.
+
+### Planned Workflow
+
+1. Select a baseline model
+2. Train the model on the prepared dataset
+3. Evaluate performance on validation and test data
+4. Improve only if needed
+5. Save the final selected model for application integration
+
+### Evaluation Focus
+
+| Metric / Output    | Purpose                            |
+| ------------------ | ---------------------------------- |
+| Accuracy           | Measure overall performance        |
+| Confusion Matrix   | Understand class-level mistakes    |
+| Version Comparison | Compare baseline vs improved model |
+
+---
+
+## 🧩 Optional Components
+
+These components are optional and will only be added if they support the final demo and remain manageable.
+
+* Scan history
+* Database integration
+* Cloud image storage
+* User feedback loop
+* Additional classes or larger datasets
+* Future deployment
+
+---
+
+## 🗂️ Repository Structure
 
 ```text
 smart-recycling-ai/
-│
 ├── frontend/          # React application
 ├── backend/           # FastAPI application
 ├── models/            # Trained model files and model-related code
-├── datasets/          # Dataset references / prepared dataset structure
+├── datasets/          # Raw and processed datasets
+├── scripts/           # Dataset preparation and future utility scripts
 ├── docs/              # Project documents, notes, and diagrams
 ├── README.md
 └── TODO.md
@@ -182,70 +332,9 @@ This makes the backend easier to:
 
 ---
 
-## 🗃️ Datasets
-
-The project uses publicly available image datasets relevant to the two target tasks.
-
-### ♻️ Waste Classification Dataset
-
-Expected labeled categories:
-
-* Plastic
-* Glass
-* Paper
-* Metal
-
-### 🥗 Food Freshness Dataset
-
-Expected labeled categories:
-
-* Fresh food
-* Half-fresh food
-* Rotten food
-
-> 📚 The final selected datasets, preprocessing decisions, class balance, and limitations will be documented during implementation.
-
----
-
-## 🧠 Model Development Plan
-
-The project uses **simple CNN-based image classification models** as a starting point.
-
-### Planned Workflow
-
-1. Select a baseline model
-2. Train the model on the prepared dataset
-3. Evaluate performance on validation and test data
-4. Improve only if needed
-5. Save the final selected model for application integration
-
-### Evaluation Focus
-
-| Metric / Output    | Purpose                            |
-| ------------------ | ---------------------------------- |
-| Accuracy           | Measure overall performance        |
-| Confusion Matrix   | Understand class-level mistakes    |
-| Version Comparison | Compare baseline vs improved model |
-
----
-
-## 🧩 Optional Components
-
-These components are optional and will only be added if they support the final demo and remain manageable.
-
-| Component              | Purpose                               | Status   |
-| ---------------------- | ------------------------------------- | -------- |
-| 🗄️ PostgreSQL         | Save scan history                     | Optional |
-| ☁️ Cloud image storage | Save uploaded images if needed        | Optional |
-| 📝 Feedback collection | Allow reporting incorrect predictions | Optional |
-
-> 🚦 These features are **not required** for the first working version of the project.
-
----
-
 ## 📌 Current Status
 
-The project is currently in the **planning and design phase**.
+The project is currently in the **dataset-prepared stage**.
 
 ### ✅ Completed
 
@@ -253,16 +342,22 @@ The project is currently in the **planning and design phase**.
 * Functional and non-functional requirements
 * System architecture planning
 * Dataset research
+* Final MVP definition
+* Raw dataset organization
+* Processed dataset creation
+* Balanced subset generation
+* `train / val / test` dataset split
+* Dataset preprocessing script creation
 * Academic documentation preparation
 
 ### ⏭️ Next Steps
 
-* Finalize dataset selection
-* Prepare datasets
-* Train baseline models
+* Train baseline waste model
+* Train baseline freshness model
 * Build backend API
 * Build frontend application
 * Connect the full prediction flow
+* Test the end-to-end demo
 
 ---
 
