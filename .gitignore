@@ -181,5 +181,4 @@ cython_debug/
 .cursorindexingignore
 
 # Datasets
-datasets/**/raw/**
-*.zip
+datasets/
