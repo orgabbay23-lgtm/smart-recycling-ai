@@ -1,0 +1,38 @@
+============================================================
+  Waste Classification Model — Test Set Evaluation
+============================================================
+
+              precision    recall  f1-score   support
+
+       glass       0.93      0.91      0.92       140
+       metal       0.91      0.91      0.91       140
+       paper       0.95      0.96      0.96       140
+     plastic       0.90      0.91      0.90       140
+
+    accuracy                           0.92       560
+   macro avg       0.92      0.92      0.92       560
+weighted avg       0.92      0.92      0.92       560
+
+Confusion Matrix:
+[[128   5   2   5]
+ [  4 127   1   8]
+ [  0   4 135   1]
+ [  5   4   4 127]]
+
+
+============================================================
+  Freshness Classification Model — Test Set Evaluation
+============================================================
+
+              precision    recall  f1-score   support
+
+       fresh       0.97      0.99      0.98       116
+      rotten       0.99      0.97      0.98       116
+
+    accuracy                           0.98       232
+   macro avg       0.98      0.98      0.98       232
+weighted avg       0.98      0.98      0.98       232
+
+Confusion Matrix:
+[[115   1]
+ [  4 112]]

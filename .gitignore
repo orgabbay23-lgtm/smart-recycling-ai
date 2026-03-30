@@ -182,3 +182,11 @@ cython_debug/
 
 # Datasets
 datasets/
+
+# Frontend / React
+node_modules/
+dist/
+
+# Model Checkpoints (Heavy files)
+*.pth
+models/checkpoints/*.pth

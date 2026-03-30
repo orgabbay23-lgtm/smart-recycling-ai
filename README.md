@@ -334,7 +334,7 @@ This makes the backend easier to:
 
 ## 📌 Current Status
 
-The project is currently in the **dataset-prepared stage**.
+The project currently has a **fully functional MVP** integrating trained PyTorch models, a FastAPI backend, and a React frontend.
 
 ### ✅ Completed
 
@@ -349,15 +349,17 @@ The project is currently in the **dataset-prepared stage**.
 * `train / val / test` dataset split
 * Dataset preprocessing script creation
 * Academic documentation preparation
+* Trained baseline ResNet18 models for Waste and Freshness
+* Evaluated models on test sets (achieving 92% and 98% accuracy)
+* Built modular FastAPI backend serving the models
+* Built React + TailwindCSS frontend with browser camera integration
+* Connected full end-to-end prediction flow
 
 ### ⏭️ Next Steps
 
-* Train baseline waste model
-* Train baseline freshness model
-* Build backend API
-* Build frontend application
-* Connect the full prediction flow
-* Test the end-to-end demo
+* UI/UX refinements and error handling improvements
+* Code cleanup and organization
+* Adding final project documentation and screenshots
 
 ---
 

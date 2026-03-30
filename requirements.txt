@@ -1,0 +1,7 @@
+torch
+torchvision
+typing_extensions
+fastapi
+uvicorn
+python-multipart
+Pillow

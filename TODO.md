@@ -93,10 +93,10 @@
 
 * [x] **[Codex CLI]** Create preprocessing script/module for dataset preparation
 * [x] **[Codex CLI]** Document dataset summary
-* [ ] **[Codex CLI]** Create preprocessing logic for model training (resize / tensor conversion / normalization)
-* [ ] **[Codex CLI]** Add normalization logic
-* [ ] **[Codex CLI]** Add simple augmentation
-* [ ] **[Codex CLI]** Save preprocessing decisions in one config/module
+* [x] **[Codex CLI]** Create preprocessing logic for model training (resize / tensor conversion / normalization)
+* [x] **[Codex CLI]** Add normalization logic
+* [x] **[Codex CLI]** Add simple augmentation
+* [x] **[Codex CLI]** Save preprocessing decisions in one config/module
 
 ---
 
@@ -104,26 +104,26 @@
 
 ### Waste Model
 
-* [ ] Choose one simple baseline model
-* [ ] **[Codex CLI]** Create training script for waste model
-* [ ] **[Codex CLI]** Train first version
-* [ ] **[Codex CLI]** Add validation/evaluation output
+* [x] Choose one simple baseline model
+* [x] **[Codex CLI]** Create training script for waste model
+* [x] **[Codex CLI]** Train first version
+* [x] **[Codex CLI]** Add validation/evaluation output
 * [ ] **[Codex CLI]** Improve model if needed
-* [ ] **[Codex CLI]** Save best model
+* [x] **[Codex CLI]** Save best model
 
 ### Freshness Model
 
-* [ ] Choose one simple baseline model
-* [ ] **[Codex CLI]** Create training script for freshness model
+* [x] Choose one simple baseline model
+* [x] **[Codex CLI]** Create training script for freshness model
 * [ ] **[Codex CLI]** Train first version
-* [ ] **[Codex CLI]** Add validation/evaluation output
+* [x] **[Codex CLI]** Add validation/evaluation output
 * [ ] **[Codex CLI]** Improve model if needed
-* [ ] **[Codex CLI]** Save best model
+* [x] **[Codex CLI]** Save best model
 
 ### Evaluation
 
-* [ ] **[Codex CLI]** Measure accuracy
-* [ ] **[Codex CLI]** Create confusion matrix
+* [x] **[Codex CLI]** Measure accuracy
+* [x] **[Codex CLI]** Create confusion matrix
 * [ ] Compare first vs final version
 * [ ] Write short conclusions
 
@@ -131,19 +131,19 @@
 
 ## ⚙️ 5) Backend (FastAPI)
 
-* [ ] **[Codex CLI]** Create simple FastAPI project structure
-* [ ] **[Codex CLI]** Add health endpoint
-* [ ] **[Codex CLI]** Add `/predict/waste` endpoint
-* [ ] **[Codex CLI]** Add `/predict/freshness` endpoint
-* [ ] **[Codex CLI]** Add model loading logic
-* [ ] **[Codex CLI]** Add inference preprocessing
-* [ ] **[Codex CLI]** Return JSON with:
+* [x] **[Codex CLI]** Create simple FastAPI project structure
+* [x] **[Codex CLI]** Add health endpoint
+* [x] **[Codex CLI]** Add `/predict/waste` endpoint
+* [x] **[Codex CLI]** Add `/predict/freshness` endpoint
+* [x] **[Codex CLI]** Add model loading logic
+* [x] **[Codex CLI]** Add inference preprocessing
+* [x] **[Codex CLI]** Return JSON with:
 
-  * [ ] **[Codex CLI]** predicted label
-  * [ ] **[Codex CLI]** confidence
-  * [ ] **[Codex CLI]** recommendation
-* [ ] **[Codex CLI]** Add simple validation for image upload / captured image input
-* [ ] **[Codex CLI]** Add clear error messages
+  * [x] **[Codex CLI]** predicted label
+  * [x] **[Codex CLI]** confidence
+  * [x] **[Codex CLI]** recommendation
+* [x] **[Codex CLI]** Add simple validation for image upload / captured image input
+* [x] **[Codex CLI]** Add clear error messages
 
 ---
 
@@ -151,31 +151,31 @@
 
 ### Basic App Structure
 
-* [ ] **[Codex CLI]** Initialize frontend project
-* [ ] **[Codex CLI]** Configure TailwindCSS
-* [ ] **[Codex CLI]** Create simple routing
-* [ ] **[Codex CLI]** Create shared layout
+* [x] **[Codex CLI]** Initialize frontend project
+* [x] **[Codex CLI]** Configure TailwindCSS
+* [x] **[Codex CLI]** Create simple routing
+* [x] **[Codex CLI]** Create shared layout
 * [ ] **[Codex CLI]** Create reusable button, card, and result components
 
 ### Pages
 
-* [ ] **[Codex CLI]** Create Home page
-* [ ] **[Codex CLI]** Create Recycle Scan page
-* [ ] **[Codex CLI]** Create Freshness Scan page
+* [x] **[Codex CLI]** Create Home page
+* [x] **[Codex CLI]** Create Recycle Scan page
+* [x] **[Codex CLI]** Create Freshness Scan page
 * [ ] **[Codex CLI]** Create Results section/page
 * [ ] **[Codex CLI]** Create About the project page
 
 ### Camera Capture Flow
 
-* [ ] **[Codex CLI]** Add browser camera access
-* [ ] **[Codex CLI]** Show camera preview
-* [ ] **[Codex CLI]** Add capture button
-* [ ] **[Codex CLI]** Convert captured image into request payload
-* [ ] **[Codex CLI]** Send captured image to backend
-* [ ] **[Codex CLI]** Show loading state
-* [ ] **[Codex CLI]** Show result clearly
-* [ ] **[Codex CLI]** Show confidence
-* [ ] **[Codex CLI]** Show recommendation
+* [x] **[Codex CLI]** Add browser camera access
+* [x] **[Codex CLI]** Show camera preview
+* [x] **[Codex CLI]** Add capture button
+* [x] **[Codex CLI]** Convert captured image into request payload
+* [x] **[Codex CLI]** Send captured image to backend
+* [x] **[Codex CLI]** Show loading state
+* [x] **[Codex CLI]** Show result clearly
+* [x] **[Codex CLI]** Show confidence
+* [x] **[Codex CLI]** Show recommendation
 * [ ] **[Codex CLI]** Add “try again” button
 
 ### UI/UX
@@ -189,9 +189,9 @@
 
 ## 🔗 7) Integration
 
-* [ ] **[Codex CLI]** Connect frontend to waste endpoint
-* [ ] **[Codex CLI]** Connect frontend to freshness endpoint
-* [ ] **[Codex CLI]** Test end-to-end waste flow
+* [x] **[Codex CLI]** Connect frontend to waste endpoint
+* [x] **[Codex CLI]** Connect frontend to freshness endpoint
+* [x] **[Codex CLI]** Test end-to-end waste flow
 * [ ] **[Codex CLI]** Test end-to-end freshness flow
 * [ ] **[Codex CLI]** Handle failed API response in UI
 
