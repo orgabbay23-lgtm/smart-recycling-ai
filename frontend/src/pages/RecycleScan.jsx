@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ImageCapture from '../components/ImageCapture'
+import Button from '../components/Button'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -39,15 +40,15 @@ export default function RecycleScan() {
       <h1 className="text-3xl font-bold text-gray-800">Scan Waste</h1>
       <p className="text-gray-500">Take a photo or upload an image of a waste item</p>
 
-      <ImageCapture onImageSelect={setImage} />
+      <ImageCapture image={image} onImageSelect={setImage} />
 
-      <button
+      <Button
         disabled={!image || loading}
         onClick={handleAnalyze}
-        className="rounded-lg bg-emerald-600 px-8 py-3 text-white font-semibold hover:bg-emerald-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        variant="primary"
       >
         {loading ? 'Analyzing...' : 'Analyze Waste'}
-      </button>
+      </Button>
 
       {error && (
         <p className="text-red-600 font-medium">{error}</p>
@@ -61,6 +62,19 @@ export default function RecycleScan() {
           </p>
           <p className="mt-3 text-gray-700">{result.recommendation}</p>
         </div>
+      )}
+
+      {(result || error) && (
+        <Button
+          onClick={() => {
+            setImage(null)
+            setResult(null)
+            setError(null)
+          }}
+          variant="secondary"
+        >
+          Try Again
+        </Button>
       )}
     </div>
   )

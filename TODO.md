@@ -163,7 +163,7 @@
 * [x] **[Codex CLI]** Create Recycle Scan page
 * [x] **[Codex CLI]** Create Freshness Scan page
 * [ ] **[Codex CLI]** Create Results section/page
-* [ ] **[Codex CLI]** Create About the project page
+* [x] **[Codex CLI]** Create About the project page
 
 ### Camera Capture Flow
 
@@ -176,7 +176,7 @@
 * [x] **[Codex CLI]** Show result clearly
 * [x] **[Codex CLI]** Show confidence
 * [x] **[Codex CLI]** Show recommendation
-* [ ] **[Codex CLI]** Add “try again” button
+* [x] **[Codex CLI]** Add “try again” button
 
 ### UI/UX
 
@@ -242,11 +242,11 @@
 * [ ] **[Codex CLI]** Put page files in one `pages/` folder
 * [ ] **[Codex CLI]** Put API calls in one `services/` folder
 * [ ] **[Codex CLI]** Put colors, labels, and UI constants in one `config/` or `constants/` file
-* [ ] **[Codex CLI]** Make button styles reusable from one component
+* [x] **[Codex CLI]** Make button styles reusable from one component
 
 ### Backend Organization
 
-* [ ] **[Codex CLI]** Separate routes, model loading, preprocessing, and inference logic
+* [x] **[Codex CLI]** Separate routes, model loading, preprocessing, and inference logic
 * [ ] **[Codex CLI]** Keep request/response schemas in one place
 * [ ] **[Codex CLI]** Keep label-to-recommendation mapping in one file
 * [ ] **[Codex CLI]** Keep model paths in config file
@@ -254,7 +254,7 @@
 
 ### Easy Future Changes
 
-* [ ] **[Codex CLI]** Make it possible to change button color from one central file/component
+* [x] **[Codex CLI]** Make it possible to change button color from one central file/component
 * [ ] **[Codex CLI]** Make it possible to change result text from one mapping file
 * [ ] **[Codex CLI]** Make it possible to change class labels without touching many files
 * [ ] **[Codex CLI]** Make it possible to replace a model file without changing endpoint

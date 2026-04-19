@@ -1,7 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function ImageCapture({ onImageSelect }) {
+export default function ImageCapture({ image, onImageSelect }) {
   const [preview, setPreview] = useState(null)
+
+  useEffect(() => {
+    if (!image) {
+      setPreview(null)
+    }
+  }, [image])
 
   function handleChange(e) {
     const file = e.target.files[0]
@@ -9,6 +15,7 @@ export default function ImageCapture({ onImageSelect }) {
 
     setPreview(URL.createObjectURL(file))
     onImageSelect(file)
+    e.target.value = null;
   }
 
   return (
