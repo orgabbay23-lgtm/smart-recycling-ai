@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Recycle } from 'lucide-react'
 import ImageCapture from '../components/ImageCapture'
 import Button from '../components/Button'
 import ScanResult from '../components/ScanResult'
@@ -43,19 +44,26 @@ export default function RecycleScan() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      <h1 className="text-3xl font-bold text-gray-800">Scan Waste</h1>
-      <p className="text-gray-500">Take a photo or upload an image of a waste item</p>
+    <div className="mx-auto flex max-w-xl flex-col items-center gap-6">
+      <div className="flex flex-col items-center gap-2 text-center animate-fade-in-up">
+        <span className="mb-1 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 shadow-soft">
+          <Recycle className="h-7 w-7" />
+        </span>
+        <h1 className="font-display text-3xl font-bold text-slate-900">Scan Waste</h1>
+        <p className="text-slate-500">Take a photo or upload an image of a waste item</p>
+      </div>
 
-      <ImageCapture image={image} onImageSelect={setImage} />
+      <div className="flex w-full flex-col items-center gap-6 rounded-3xl border border-white/60 bg-white/80 p-8 shadow-card backdrop-blur animate-fade-in-up">
+        <ImageCapture image={image} onImageSelect={setImage} />
 
-      <Button
-        disabled={!image || loading}
-        onClick={handleAnalyze}
-        variant="primary"
-      >
-        {loading ? 'Analyzing...' : 'Analyze Waste'}
-      </Button>
+        <Button
+          disabled={!image || loading}
+          onClick={handleAnalyze}
+          variant="primary"
+        >
+          {loading ? 'Analyzing...' : 'Analyze Waste'}
+        </Button>
+      </div>
 
       <ScanResult result={result} error={error} onRetry={handleRetry} />
     </div>

@@ -2,6 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #f0fdf4;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-slate-700 antialiased;
+    min-height: 100vh;
+    background-color: #f4fbf7;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.12) 0px, transparent 45%),
+      radial-gradient(at 100% 0%, rgba(45, 212, 191, 0.10) 0px, transparent 45%),
+      radial-gradient(at 100% 100%, rgba(251, 191, 36, 0.08) 0px, transparent 45%),
+      radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.07) 0px, transparent 45%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-emerald-200/70 text-emerald-900;
+  }
+}
+
+@layer utilities {
+  .text-gradient-emerald {
+    @apply bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.28);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.5);
+  background-clip: content-box;
 }
