@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, HTTPException
 from backend.inference import predict_image
 from backend.config import WASTE_RECOMMENDATIONS
+from backend.database import record_scan
 
 router = APIRouter()
 
@@ -17,6 +18,8 @@ async def predict_waste(file: UploadFile):
     image_bytes = await file.read()
     label, confidence = predict_image(image_bytes, "waste")
     recommendation = WASTE_RECOMMENDATIONS[label]
+
+    record_scan("waste", label, confidence)
 
     return {
         "label": label,

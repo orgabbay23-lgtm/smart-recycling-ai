@@ -1,0 +1,10 @@
+Freshness Classification Model — Test Set Evaluation
+
+              precision    recall  f1-score   support
+
+       fresh       0.97      0.99      0.98       116
+      rotten       0.99      0.97      0.98       116
+
+    accuracy                           0.98       232
+   macro avg       0.98      0.98      0.98       232
+weighted avg       0.98      0.98      0.98       232

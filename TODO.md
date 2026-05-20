@@ -124,7 +124,8 @@
 
 * [x] **[Codex CLI]** Measure accuracy
 * [x] **[Codex CLI]** Create confusion matrix
-* [ ] Compare first vs final version
+* [x] **[Codex CLI]** Save training/validation loss charts
+* [x] Compare first vs final version
 * [ ] Write short conclusions
 
 ---
@@ -155,14 +156,14 @@
 * [x] **[Codex CLI]** Configure TailwindCSS
 * [x] **[Codex CLI]** Create simple routing
 * [x] **[Codex CLI]** Create shared layout
-* [ ] **[Codex CLI]** Create reusable button, card, and result components
+* [x] **[Codex CLI]** Create reusable button, card, and result components
 
 ### Pages
 
 * [x] **[Codex CLI]** Create Home page
 * [x] **[Codex CLI]** Create Recycle Scan page
 * [x] **[Codex CLI]** Create Freshness Scan page
-* [ ] **[Codex CLI]** Create Results section/page
+* [x] **[Codex CLI]** Create Results section/page
 * [x] **[Codex CLI]** Create About the project page
 
 ### Camera Capture Flow
@@ -193,7 +194,7 @@
 * [x] **[Codex CLI]** Connect frontend to freshness endpoint
 * [x] **[Codex CLI]** Test end-to-end waste flow
 * [ ] **[Codex CLI]** Test end-to-end freshness flow
-* [ ] **[Codex CLI]** Handle failed API response in UI
+* [x] **[Codex CLI]** Handle failed API response in UI
 
 ---
 
@@ -202,8 +203,10 @@
 ### Database
 
 * [ ] Decide whether to save scan history
-* [ ] **[Codex CLI]** If yes: create one simple table for scan history
-* [ ] **[Codex CLI]** If yes: connect backend to PostgreSQL
+* [x] **[Codex CLI]** If yes: create one simple table for scan history
+* [x] **[Codex CLI]** If yes: connect backend to SQLite / database
+* [x] **[Codex CLI]** Add fetch user history endpoint
+* [x] **[Codex CLI]** Implement simple history UI in Frontend
 
 ### Cloud Storage
 

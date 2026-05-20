@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ImageCapture from '../components/ImageCapture'
 import Button from '../components/Button'
+import ScanResult from '../components/ScanResult'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
@@ -9,6 +10,12 @@ export default function RecycleScan() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+
+  function handleRetry() {
+    setImage(null)
+    setResult(null)
+    setError(null)
+  }
 
   async function handleAnalyze() {
     setLoading(true)
@@ -50,32 +57,7 @@ export default function RecycleScan() {
         {loading ? 'Analyzing...' : 'Analyze Waste'}
       </Button>
 
-      {error && (
-        <p className="text-red-600 font-medium">{error}</p>
-      )}
-
-      {result && (
-        <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-md text-center">
-          <p className="text-lg font-semibold text-gray-800">{result.label}</p>
-          <p className="text-sm text-gray-500 mt-1">
-            Confidence: {(result.confidence * 100).toFixed(1)}%
-          </p>
-          <p className="mt-3 text-gray-700">{result.recommendation}</p>
-        </div>
-      )}
-
-      {(result || error) && (
-        <Button
-          onClick={() => {
-            setImage(null)
-            setResult(null)
-            setError(null)
-          }}
-          variant="secondary"
-        >
-          Try Again
-        </Button>
-      )}
+      <ScanResult result={result} error={error} onRetry={handleRetry} />
     </div>
   )
 }

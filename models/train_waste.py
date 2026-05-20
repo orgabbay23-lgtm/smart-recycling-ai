@@ -4,6 +4,11 @@ Uses a pretrained ResNet18 fine-tuned on our 4-class waste dataset.
 """
 
 import os
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -19,6 +24,8 @@ NUM_EPOCHS = 5
 LEARNING_RATE = 1e-4
 CHECKPOINT_DIR = os.path.join(os.path.dirname(__file__), "checkpoints")
 BEST_MODEL_PATH = os.path.join(CHECKPOINT_DIR, "best_waste_model.pth")
+LOGS_DIR = os.path.join(os.path.dirname(__file__), "..", "experiments", "logs")
+HISTORY_PLOT_PATH = os.path.join(LOGS_DIR, "training_history_waste.png")
 
 
 def build_model(num_classes):
@@ -72,6 +79,32 @@ def evaluate(model, loader, criterion, device):
     return running_loss / total, correct / total
 
 
+def plot_history(history, save_path):
+    """Plot train/val loss and accuracy curves side by side and save to disk."""
+    epochs = range(1, len(history["train_loss"]) + 1)
+
+    fig, (ax_loss, ax_acc) = plt.subplots(1, 2, figsize=(12, 5))
+
+    ax_loss.plot(epochs, history["train_loss"], label="Train")
+    ax_loss.plot(epochs, history["val_loss"], label="Val")
+    ax_loss.set_title("Loss")
+    ax_loss.set_xlabel("Epoch")
+    ax_loss.set_ylabel("Loss")
+    ax_loss.legend()
+
+    ax_acc.plot(epochs, history["train_acc"], label="Train")
+    ax_acc.plot(epochs, history["val_acc"], label="Val")
+    ax_acc.set_title("Accuracy")
+    ax_acc.set_xlabel("Epoch")
+    ax_acc.set_ylabel("Accuracy")
+    ax_acc.legend()
+
+    fig.tight_layout()
+    fig.savefig(save_path)
+    plt.close(fig)
+    print(f"Saved training history plot to {save_path}")
+
+
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
@@ -85,10 +118,12 @@ def main():
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
-    # Ensure checkpoint directory exists
+    # Ensure checkpoint and logs directories exist
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
+    os.makedirs(LOGS_DIR, exist_ok=True)
 
     best_val_acc = 0.0
+    history = {"train_loss": [], "val_loss": [], "train_acc": [], "val_acc": []}
 
     for epoch in range(1, NUM_EPOCHS + 1):
         train_loss, train_acc = train_one_epoch(
@@ -97,6 +132,11 @@ def main():
         val_loss, val_acc = evaluate(
             model, loaders["val"], criterion, device
         )
+
+        history["train_loss"].append(train_loss)
+        history["val_loss"].append(val_loss)
+        history["train_acc"].append(train_acc)
+        history["val_acc"].append(val_acc)
 
         print(
             f"Epoch {epoch}/{NUM_EPOCHS}  "
@@ -111,6 +151,8 @@ def main():
             print(f"  -> New best model saved ({best_val_acc:.4f})")
 
     print(f"\nTraining complete. Best validation accuracy: {best_val_acc:.4f}")
+
+    plot_history(history, HISTORY_PLOT_PATH)
 
 
 if __name__ == "__main__":

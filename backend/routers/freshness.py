@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, HTTPException
 from backend.inference import predict_image
 from backend.config import FRESHNESS_RECOMMENDATIONS
+from backend.database import record_scan
 
 router = APIRouter()
 
@@ -17,6 +18,8 @@ async def predict_freshness(file: UploadFile):
     image_bytes = await file.read()
     label, confidence = predict_image(image_bytes, "freshness")
     recommendation = FRESHNESS_RECOMMENDATIONS[label]
+
+    record_scan("freshness", label, confidence)
 
     return {
         "label": label,

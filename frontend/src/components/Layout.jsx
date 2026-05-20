@@ -9,6 +9,9 @@ export default function Layout() {
             Smart Recycling AI
           </Link>
           <div className="flex gap-4">
+            <Link to="/history" className="text-gray-600 hover:text-emerald-600 font-medium transition-colors">
+              History
+            </Link>
             <Link to="/about" className="text-gray-600 hover:text-emerald-600 font-medium transition-colors">
               About
             </Link>

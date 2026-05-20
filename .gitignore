@@ -190,3 +190,6 @@ dist/
 # Model Checkpoints (Heavy files)
 *.pth
 models/checkpoints/*.pth
+
+# SQLite scan history database (runtime artifact)
+backend/scan_history.db
