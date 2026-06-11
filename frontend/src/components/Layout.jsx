@@ -28,8 +28,14 @@ export default function Layout() {
             </span>
           </Link>
           <div className="flex items-center gap-1">
+            <NavLink to="/statistics" className={navLinkClass}>
+              Statistics
+            </NavLink>
             <NavLink to="/history" className={navLinkClass}>
               History
+            </NavLink>
+            <NavLink to="/quiz" className={navLinkClass}>
+              Play Quiz
             </NavLink>
             <NavLink to="/about" className={navLinkClass}>
               About

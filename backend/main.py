@@ -5,7 +5,7 @@ FastAPI application for Smart Recycling AI predictions.
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.routers import waste, freshness, history
+from backend.routers import waste, freshness, history, quiz
 from backend.database import init_db
 
 app = FastAPI(title="Smart Recycling AI")
@@ -23,6 +23,7 @@ app.add_middleware(
 app.include_router(waste.router)
 app.include_router(freshness.router)
 app.include_router(history.router)
+app.include_router(quiz.router)
 
 
 @app.get("/health")

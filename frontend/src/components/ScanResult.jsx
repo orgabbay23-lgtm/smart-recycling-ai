@@ -1,4 +1,4 @@
-import { CheckCircle, AlertCircle, RefreshCw } from 'lucide-react'
+import { CheckCircle, AlertCircle, RefreshCw, Info, ChefHat, AlertTriangle } from 'lucide-react'
 import Button from './Button'
 
 export default function ScanResult({ result, error, onRetry }) {
@@ -36,6 +36,36 @@ export default function ScanResult({ result, error, onRetry }) {
 
           {result.recommendation && (
             <p className="mt-2 leading-relaxed text-slate-600">{result.recommendation}</p>
+          )}
+
+          {result.storage_tip && (
+            <div className="flex items-start gap-2 bg-blue-50 text-blue-800 border border-blue-100 rounded-xl p-4 text-left text-sm mt-3">
+              <Info className="mt-0.5 h-5 w-5 shrink-0" />
+              <p className="leading-relaxed">
+                <span className="font-semibold">Storage Tip: </span>
+                {result.storage_tip}
+              </p>
+            </div>
+          )}
+
+          {result.recipe_suggestion && (
+            <div className="flex items-start gap-2 bg-amber-50 text-amber-800 border border-amber-100 rounded-xl p-4 text-left text-sm mt-3">
+              <ChefHat className="mt-0.5 h-5 w-5 shrink-0" />
+              <p className="leading-relaxed">
+                <span className="font-semibold">Overripe Tip: </span>
+                {result.recipe_suggestion}
+              </p>
+            </div>
+          )}
+
+          {result.safety_tip && (
+            <div className="flex items-start gap-2 bg-red-50 text-red-800 border border-red-100 rounded-xl p-4 text-left text-sm mt-3">
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
+              <p className="leading-relaxed">
+                <span className="font-semibold">💡 Fast Tip: </span>
+                {result.safety_tip}
+              </p>
+            </div>
           )}
         </div>
       )}

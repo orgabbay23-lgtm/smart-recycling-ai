@@ -19,7 +19,7 @@ async def predict_waste(file: UploadFile):
     label, confidence = predict_image(image_bytes, "waste")
     recommendation = WASTE_RECOMMENDATIONS[label]
 
-    record_scan("waste", label, confidence)
+    record_scan("waste", label, confidence, image_bytes)
 
     return {
         "label": label,

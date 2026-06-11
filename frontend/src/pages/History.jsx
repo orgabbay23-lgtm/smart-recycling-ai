@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react'
-import { AlertCircle, Loader2, RefreshCw, History as HistoryIcon } from 'lucide-react'
+import { History as HistoryIcon, Loader2, AlertCircle, RefreshCw, ImageOff } from 'lucide-react'
 import Button from '../components/Button'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
+const SCAN_TYPE_STYLES = {
+  waste: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+  freshness: 'bg-amber-50 text-amber-700 border-amber-100',
+}
 
 function formatTimestamp(value) {
   const date = new Date(value)
@@ -14,11 +19,6 @@ function formatTimestamp(value) {
     hour: '2-digit',
     minute: '2-digit',
   })
-}
-
-const SCAN_TYPE_STYLES = {
-  waste: 'bg-emerald-50 text-emerald-700 border-emerald-100',
-  freshness: 'bg-amber-50 text-amber-700 border-amber-100',
 }
 
 export default function History() {
@@ -90,42 +90,47 @@ export default function History() {
           <p className="text-sm">Your recent scans will appear here.</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-3xl border border-white/60 bg-white/85 shadow-card backdrop-blur">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-slate-100 bg-slate-50/80 text-xs uppercase tracking-wider text-slate-500">
-                <th className="px-5 py-3.5 font-semibold">Type</th>
-                <th className="px-5 py-3.5 font-semibold">Prediction</th>
-                <th className="px-5 py-3.5 font-semibold">Confidence</th>
-                <th className="px-5 py-3.5 font-semibold">When</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {scans.map((scan) => (
-                <tr key={scan.id} className="transition-colors hover:bg-emerald-50/40">
-                  <td className="px-5 py-4">
-                    <span
-                      className={`inline-block rounded-full border px-2.5 py-0.5 text-xs font-semibold capitalize ${
-                        SCAN_TYPE_STYLES[scan.scan_type] || 'bg-slate-50 text-slate-700 border-slate-100'
-                      }`}
-                    >
-                      {scan.scan_type}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4 font-semibold capitalize text-slate-800">
+        <ul className="space-y-3">
+          {scans.map((scan) => (
+            <li
+              key={scan.id}
+              className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/85 p-3 shadow-card backdrop-blur transition-colors hover:bg-emerald-50/40"
+            >
+              {scan.thumbnail ? (
+                <img
+                  src={scan.thumbnail}
+                  alt={scan.predicted_label}
+                  className="h-20 w-20 shrink-0 rounded-2xl object-cover ring-1 ring-slate-200"
+                />
+              ) : (
+                <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-300">
+                  <ImageOff className="h-8 w-8" />
+                </span>
+              )}
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`inline-block rounded-full border px-2.5 py-0.5 text-xs font-semibold capitalize ${
+                      SCAN_TYPE_STYLES[scan.scan_type] || 'bg-slate-50 text-slate-700 border-slate-100'
+                    }`}
+                  >
+                    {scan.scan_type}
+                  </span>
+                  <span className="truncate font-semibold capitalize text-slate-800">
                     {scan.predicted_label}
-                  </td>
-                  <td className="px-5 py-4 text-slate-600 tabular-nums">
-                    {(scan.confidence * 100).toFixed(1)}%
-                  </td>
-                  <td className="px-5 py-4 text-sm text-slate-500">
-                    {formatTimestamp(scan.timestamp)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </span>
+                </div>
+                <p className="mt-0.5 text-xs text-slate-400">{formatTimestamp(scan.timestamp)}</p>
+              </div>
+              <div className="shrink-0 text-right">
+                <div className="font-semibold tabular-nums text-slate-700">
+                  {(scan.confidence * 100).toFixed(1)}%
+                </div>
+                <div className="text-xs text-slate-400">confidence</div>
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   )
