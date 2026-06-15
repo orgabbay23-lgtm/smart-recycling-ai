@@ -13,12 +13,19 @@ import Button from '../components/Button'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
-// Waste categories paired with the bin colour used across the app.
+// Waste categories (matching the EfficientNetV2 model's 10 classes) paired with
+// a distinct chart colour.
 const WASTE_TYPES = [
+  { key: 'battery', label: 'Battery', color: '#ef4444' },
+  { key: 'biological', label: 'Biological', color: '#84cc16' },
+  { key: 'cardboard', label: 'Cardboard', color: '#d97706' },
+  { key: 'clothes', label: 'Clothes', color: '#ec4899' },
   { key: 'glass', label: 'Glass', color: '#a855f7' },
   { key: 'metal', label: 'Metal', color: '#f97316' },
   { key: 'paper', label: 'Paper', color: '#3b82f6' },
   { key: 'plastic', label: 'Plastic', color: '#10b981' },
+  { key: 'shoes', label: 'Shoes', color: '#14b8a6' },
+  { key: 'trash', label: 'Trash', color: '#64748b' },
 ]
 
 const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']

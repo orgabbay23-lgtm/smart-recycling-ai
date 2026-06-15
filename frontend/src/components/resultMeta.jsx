@@ -27,25 +27,25 @@ export const TONES = {
 // label -> how to present it. `kind` selects the glyph; `tone` matches the real-world bin colour.
 export const RESULT_META = {
   // --- waste bins ---
-  battery:    { kind: 'bin', eyebrow: 'Drop it off at', title: 'E-Waste Spot',     tone: 'red',    item: 'Battery',    Icon: Battery },
-  biological: { kind: 'bin', eyebrow: 'Toss this in',   title: 'Brown Bin',       tone: 'amber',  item: 'Biological', Icon: Leaf },
-  cardboard:  { kind: 'bin', eyebrow: 'Toss this in',   title: 'Cardboard Cage',  tone: 'yellow', item: 'Cardboard',  Icon: Package },
-  clothes:    { kind: 'bin', eyebrow: 'Donate at',       title: 'Textile Bin',     tone: 'pink',   item: 'Clothes',    Icon: Shirt },
-  glass:      { kind: 'bin', eyebrow: 'Toss this in',   title: 'Purple Bin',      tone: 'purple', item: 'Glass',      Icon: Wine },
-  metal:      { kind: 'bin', eyebrow: 'Toss this in',   title: 'Orange Bin',      tone: 'orange', item: 'Metal',      Icon: Recycle },
-  paper:      { kind: 'bin', eyebrow: 'Toss this in',   title: 'Blue Bin',        tone: 'blue',   item: 'Paper',      Icon: Newspaper },
-  plastic:    { kind: 'bin', eyebrow: 'Toss this in',   title: 'Orange Bin',      tone: 'orange', item: 'Plastic',    Icon: CupSoda },
-  shoes:      { kind: 'bin', eyebrow: 'Donate at',       title: 'Textile Bin',     tone: 'pink',   item: 'Shoes',      Icon: Footprints },
-  trash:      { kind: 'bin', eyebrow: 'Toss this in',   title: 'General Waste',   tone: 'slate',  item: 'Trash',      Icon: Trash2 },
+  battery:    { kind: 'bin', eyebrow: 'Take it to',  title: 'E-Waste Point',  tone: 'red',    item: 'Battery',    Icon: Battery },
+  biological: { kind: 'bin', eyebrow: 'Put it in',   title: 'Brown Bin',      tone: 'amber',  item: 'Biological', Icon: Leaf },
+  cardboard:  { kind: 'bin', eyebrow: 'Put it in',   title: 'Cardboard Cage', tone: 'yellow', item: 'Cardboard',  Icon: Package },
+  clothes:    { kind: 'bin', eyebrow: 'Donate to',   title: 'Textile Bin',    tone: 'pink',   item: 'Clothes',    Icon: Shirt },
+  glass:      { kind: 'bin', eyebrow: 'Put it in',   title: 'Purple Bin',     tone: 'purple', item: 'Glass',      Icon: Wine },
+  metal:      { kind: 'bin', eyebrow: 'Put it in',   title: 'Orange Bin',     tone: 'orange', item: 'Metal',      Icon: Recycle },
+  paper:      { kind: 'bin', eyebrow: 'Put it in',   title: 'Blue Bin',       tone: 'blue',   item: 'Paper',      Icon: Newspaper },
+  plastic:    { kind: 'bin', eyebrow: 'Put it in',   title: 'Orange Bin',     tone: 'orange', item: 'Plastic',    Icon: CupSoda },
+  shoes:      { kind: 'bin', eyebrow: 'Donate to',   title: 'Textile Bin',    tone: 'pink',   item: 'Shoes',      Icon: Footprints },
+  trash:      { kind: 'bin', eyebrow: 'Put it in',   title: 'General Waste',  tone: 'slate',  item: 'Trash',      Icon: Trash2 },
   // --- freshness ---
   fresh:      { kind: 'fresh',  title: 'Fresh',   tone: 'emerald', item: 'Fresh produce',   Icon: Apple },
-  rotten:     { kind: 'rotten', title: 'Rotten',  tone: 'rose',    item: 'Rotten produce',  Icon: Apple },
+  rotten:     { kind: 'rotten', title: 'Spoiled', tone: 'rose',    item: 'Spoiled produce', Icon: Apple },
 }
 
 export function getResultMeta(label) {
   return (
     RESULT_META[label] ||
-    { kind: 'bin', eyebrow: 'Toss in', title: label, tone: 'slate', item: label, Icon: Recycle }
+    { kind: 'bin', eyebrow: 'Dispose as', title: label, tone: 'slate', item: label, Icon: Recycle }
   )
 }
 

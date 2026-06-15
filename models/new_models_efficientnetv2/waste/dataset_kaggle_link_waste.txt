@@ -1,0 +1,9 @@
+https://www.kaggle.com/datasets/sumn2u/garbage-classification-v2
+
+Multi-category garbage dataset (~19k images, 10 classes).
+Kaggle mount path: /kaggle/input/garbage-classification-v2
+
+Alternative (12 classes): https://www.kaggle.com/datasets/mostafaabla/garbage-classification
+  -> if used, set DEFAULT_DATA_DIR = /kaggle/input/garbage-classification in cell 1.
+
+(Previous binary dataset, no longer used: techsash/waste-classification-data)

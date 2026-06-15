@@ -7,6 +7,7 @@ import Statistics from './pages/Statistics'
 import History from './pages/History'
 import Quiz from './pages/Quiz'
 import About from './pages/About'
+import ModelComparison from './pages/ModelComparison'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/about" element={<About />} />
+        <Route path="/previous-versions" element={<ModelComparison />} />
         {/* Redirect the old route and any unknown path so the app never blanks out */}
         <Route path="/dashboard" element={<Navigate to="/statistics" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />

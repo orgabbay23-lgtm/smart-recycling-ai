@@ -25,7 +25,7 @@ export default function ScanResult({ result, error, onRetry }) {
           <span className="flex h-16 w-16 items-center justify-center rounded-full bg-red-50 ring-8 ring-red-50/50">
             <AlertCircle className="h-9 w-9 text-red-500" />
           </span>
-          <p className="text-lg font-semibold text-slate-800">Oops, something went wrong!</p>
+          <p className="text-lg font-semibold text-slate-800">Something went wrong</p>
           <p className="text-sm text-slate-500">{error}</p>
         </div>
       ) : (
@@ -64,7 +64,7 @@ export default function ScanResult({ result, error, onRetry }) {
             <div className="flex items-start gap-2 bg-blue-50 text-blue-800 border border-blue-100 rounded-xl p-4 text-left text-sm mt-2">
               <Info className="mt-0.5 h-5 w-5 shrink-0" />
               <p className="leading-relaxed">
-                <span className="font-semibold">💡 How to store it: </span>
+                <span className="font-semibold">Storage Tip: </span>
                 {result.storage_tip}
               </p>
             </div>
@@ -74,7 +74,7 @@ export default function ScanResult({ result, error, onRetry }) {
             <div className="flex items-start gap-2 bg-amber-50 text-amber-800 border border-amber-100 rounded-xl p-4 text-left text-sm mt-2">
               <ChefHat className="mt-0.5 h-5 w-5 shrink-0" />
               <p className="leading-relaxed">
-                <span className="font-semibold">👩‍🍳 Recipe idea: </span>
+                <span className="font-semibold">Overripe Tip: </span>
                 {result.recipe_suggestion}
               </p>
             </div>
@@ -84,7 +84,7 @@ export default function ScanResult({ result, error, onRetry }) {
             <div className="flex items-start gap-2 bg-red-50 text-red-800 border border-red-100 rounded-xl p-4 text-left text-sm mt-2">
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
               <p className="leading-relaxed">
-                <span className="font-semibold">⚠️ Safety warning: </span>
+                <span className="font-semibold">💡 Fast Tip: </span>
                 {result.safety_tip}
               </p>
             </div>
@@ -93,7 +93,7 @@ export default function ScanResult({ result, error, onRetry }) {
           {/* confidence — quiet footer: how sure the model is, not the headline */}
           <div
             className="mt-2 flex items-center gap-2 text-xs text-slate-400"
-            title="How certain our AI is about this result"
+            title="How sure the AI model is about this result"
           >
             <span className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100">
               <span
@@ -101,7 +101,7 @@ export default function ScanResult({ result, error, onRetry }) {
                 style={{ width: `${Math.min(confidencePct, 100)}%` }}
               />
             </span>
-            <span>{confidencePct}% sure</span>
+            <span>{confidencePct}% confident</span>
           </div>
         </div>
       )}
@@ -112,7 +112,7 @@ export default function ScanResult({ result, error, onRetry }) {
         className="mt-6 inline-flex items-center gap-2"
       >
         <RefreshCw className="h-4 w-4" />
-        Start over
+        Try Again
       </Button>
     </div>
   )

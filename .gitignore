@@ -1,3 +1,9 @@
+# Editor / tooling
+.claude/
+
+# Model weights (large binaries)
+*.pth
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

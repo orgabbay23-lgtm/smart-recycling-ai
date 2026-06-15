@@ -18,7 +18,7 @@ async def predict_freshness(file: UploadFile):
     if file.content_type not in ALLOWED_CONTENT_TYPES:
         raise HTTPException(
             status_code=400,
-            detail=f"File must be an image. Got: {file.content_type}",
+            detail=f"Please upload an image file (this one was {file.content_type}).",
         )
 
     image_bytes = await file.read()

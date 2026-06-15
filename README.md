@@ -23,7 +23,7 @@ It focuses on **two main tasks**:
 
 | Feature | What it does | Output |
 |---|---|---|
-| ♻️ **Waste Classification** | Detects whether an item belongs to plastic, glass, paper, or metal | Predicted class + recycling recommendation |
+| ♻️ **Waste Classification** | Detects an item's category across 10 types (battery, biological, cardboard, clothes, glass, metal, paper, plastic, shoes, trash) | Predicted class + recycling recommendation |
 | 🥗 **Food Freshness Detection** | Detects whether food is fresh or rotten | Freshness level + usage/disposal recommendation |
 
 > 💡 The goal is to build a clean academic prototype that demonstrates how machine learning can be applied to real-world sustainability problems.
@@ -350,7 +350,9 @@ The project currently has a **fully functional MVP** integrating trained PyTorch
 * Dataset preprocessing script creation
 * Academic documentation preparation
 * Trained baseline ResNet18 models for Waste and Freshness
-* Evaluated models on test sets (achieving 92% and 98% accuracy)
+* Upgraded to EfficientNetV2-S models trained on Kaggle (T4 GPU): Waste 10-class
+  garbage classification (~99.6% val accuracy) and Freshness fresh/rotten (~98.8%)
+* Evaluated models on held-out sets (classification reports + confusion matrices)
 * Built modular FastAPI backend serving the models
 * Built React + TailwindCSS frontend with browser camera integration
 * Connected full end-to-end prediction flow

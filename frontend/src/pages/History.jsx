@@ -62,7 +62,7 @@ export default function History() {
           <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 shadow-soft">
             <HistoryIcon className="h-6 w-6" />
           </span>
-          My Past Scans
+          Scan History
         </h1>
         <Button
           onClick={loadHistory}
@@ -71,22 +71,22 @@ export default function History() {
           className="inline-flex items-center gap-2 px-5 py-2.5"
         >
           <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-          Refresh list
+          Refresh
         </Button>
       </div>
 
       {loading ? (
         <div className="flex flex-col items-center gap-3 py-16 text-slate-500">
           <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
-          <p>Pulling up your previous scans...</p>
+          <p>Loading history...</p>
         </div>
       ) : error ? (
         <div className="flex flex-col items-center gap-3 rounded-3xl border border-white/60 bg-white/80 py-16 text-center shadow-card backdrop-blur">
           <AlertCircle className="h-10 w-10 text-red-500" />
-          <p className="text-lg font-semibold text-slate-800">We couldn't load your scan history</p>
+          <p className="text-lg font-semibold text-slate-800">Could not load history</p>
           <p className="text-sm text-slate-500">{error}</p>
           <Button onClick={loadHistory} variant="secondary" className="mt-2">
-            Give it another shot
+            Try Again
           </Button>
         </div>
       ) : scans.length === 0 ? (
@@ -94,8 +94,8 @@ export default function History() {
           <span className="mb-1 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
             <HistoryIcon className="h-8 w-8 text-slate-300" />
           </span>
-          <p className="text-lg font-medium text-slate-700">Nothing scanned yet</p>
-          <p className="text-sm">Once you start scanning items, they'll show up here!</p>
+          <p className="text-lg font-medium text-slate-700">No scans yet</p>
+          <p className="text-sm">Your recent scans will appear here.</p>
         </div>
       ) : (
         <ul className="space-y-3">

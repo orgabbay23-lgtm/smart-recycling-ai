@@ -33,7 +33,7 @@ export default function RecycleScan() {
       })
       if (!res.ok) {
         const body = await res.json().catch(() => null)
-        throw new Error(body?.detail || 'Prediction failed')
+        throw new Error(body?.detail || 'We couldn’t analyze that image. Please try again.')
       }
       setResult(await res.json())
     } catch (err) {
