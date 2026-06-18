@@ -11,13 +11,22 @@ from fastapi import APIRouter, HTTPException
 router = APIRouter()
 
 _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+_BACKEND_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 _IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
-# Each item_type maps to the processed dataset whose subfolders are the categories.
+# Each item_type maps to processed dataset roots whose subfolders are categories.
+# The tiny bundled sample keeps the hosted demo quiz working without shipping
+# the multi-GB local training dataset.
 _DATASET_ROOTS = {
-    "waste": os.path.join(_PROJECT_ROOT, "datasets", "waste", "processed"),
-    "freshness": os.path.join(_PROJECT_ROOT, "datasets", "freshness", "processed"),
+    "waste": [
+        os.path.join(_PROJECT_ROOT, "datasets", "waste", "processed"),
+        os.path.join(_BACKEND_ROOT, "quiz_samples", "waste"),
+    ],
+    "freshness": [
+        os.path.join(_PROJECT_ROOT, "datasets", "freshness", "processed"),
+        os.path.join(_BACKEND_ROOT, "quiz_samples", "freshness"),
+    ],
 }
 
 
@@ -28,26 +37,27 @@ def _build_index() -> dict[str, list[dict]]:
     correct answer) from the folder name. Built once at import time.
     """
     index: dict[str, list[dict]] = {}
-    for item_type, root in _DATASET_ROOTS.items():
+    for item_type, roots in _DATASET_ROOTS.items():
         items: list[dict] = []
-        if not os.path.isdir(root):
-            continue
-        for split in os.listdir(root):
-            split_dir = os.path.join(root, split)
-            if not os.path.isdir(split_dir):
+        for root in roots:
+            if not os.path.isdir(root):
                 continue
-            for category in os.listdir(split_dir):
-                category_dir = os.path.join(split_dir, category)
-                if not os.path.isdir(category_dir):
+            for split in os.listdir(root):
+                split_dir = os.path.join(root, split)
+                if not os.path.isdir(split_dir):
                     continue
-                for filename in os.listdir(category_dir):
-                    if os.path.splitext(filename)[1].lower() in _IMAGE_EXTENSIONS:
-                        items.append(
-                            {
-                                "path": os.path.join(category_dir, filename),
-                                "correct_answer": category,
-                            }
-                        )
+                for category in os.listdir(split_dir):
+                    category_dir = os.path.join(split_dir, category)
+                    if not os.path.isdir(category_dir):
+                        continue
+                    for filename in os.listdir(category_dir):
+                        if os.path.splitext(filename)[1].lower() in _IMAGE_EXTENSIONS:
+                            items.append(
+                                {
+                                    "path": os.path.join(category_dir, filename),
+                                    "correct_answer": category,
+                                }
+                            )
         if items:
             index[item_type] = items
     return index
