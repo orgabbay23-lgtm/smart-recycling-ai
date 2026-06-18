@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { History as HistoryIcon, Loader2, AlertCircle, RefreshCw, ImageOff } from 'lucide-react'
+import { History as HistoryIcon, Loader2, AlertCircle, RefreshCw, ImageOff, Trash2 } from 'lucide-react'
 import Button from '../components/Button'
 import { TONES, getResultMeta, ResultGlyph } from '../components/resultMeta'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL } from '../services/api'
 
 const SCAN_TYPE_STYLES = {
   waste: 'bg-emerald-50 text-emerald-700 border-emerald-100',
@@ -33,6 +32,7 @@ export default function History() {
   const [scans, setScans] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [deletingId, setDeletingId] = useState(null)
 
   async function loadHistory() {
     setLoading(true)
@@ -48,6 +48,23 @@ export default function History() {
       setError(err.message)
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function deleteScan(id) {
+    setDeletingId(id)
+    const previous = scans
+    // Optimistically drop it so the list feels instant.
+    setScans((current) => current.filter((scan) => scan.id !== id))
+    try {
+      const res = await fetch(`${API_URL}/history/${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed to delete scan')
+    } catch (err) {
+      // Roll back if the server rejected the delete.
+      setScans(previous)
+      setError(err.message)
+    } finally {
+      setDeletingId(null)
     }
   }
 
@@ -106,7 +123,7 @@ export default function History() {
             return (
               <li
                 key={scan.id}
-                className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/85 p-3 shadow-card backdrop-blur transition-colors hover:bg-emerald-50/40"
+                className="group relative flex items-center gap-4 rounded-2xl border border-white/60 bg-white/85 p-3 shadow-card backdrop-blur transition-colors hover:bg-emerald-50/40"
               >
                 {scan.thumbnail ? (
                   <img
@@ -141,6 +158,20 @@ export default function History() {
                   </div>
                   <div className="text-xs text-slate-400">{dest.caption}</div>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => deleteScan(scan.id)}
+                  disabled={deletingId === scan.id}
+                  aria-label="Delete scan"
+                  title="Delete scan"
+                  className="shrink-0 rounded-full p-2 text-slate-300 opacity-0 transition-all hover:bg-red-50 hover:text-red-500 focus:opacity-100 focus-visible:outline-none group-hover:opacity-100 disabled:opacity-50"
+                >
+                  {deletingId === scan.id ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Trash2 className="h-4 w-4" />
+                  )}
+                </button>
               </li>
             )
           })}

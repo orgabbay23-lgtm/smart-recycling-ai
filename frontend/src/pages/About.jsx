@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { BarChart3, Recycle, Apple, Cpu, Database, SlidersHorizontal, History } from 'lucide-react'
+import CodeExamples from '../components/CodeExamples'
 
 const MODELS = [
   {
@@ -82,30 +83,6 @@ const TRAINING_FACTS = [
     title: 'Schedule',
     body: 'We trained for up to 50 passes over the data (epochs), but stopped early if the model went 7 rounds without improving — and always kept the best version. Waste finished at 99.6% and freshness at 98.8% validation accuracy.',
   },
-]
-
-// The real training loop, kept as a single code block. Lines carrying a `tag`
-// are highlighted to mark the key idea happening on that line.
-const TRAINING_CODE = [
-  { code: '# EfficientNetV2-S transfer learning (per task)' },
-  { code: 'weights = EfficientNet_V2_S_Weights.DEFAULT', tag: 'pretrained on ImageNet' },
-  { code: 'model = models.efficientnet_v2_s(weights=weights)' },
-  { code: 'model.classifier[1] = nn.Linear(', tag: 'swap head → our classes' },
-  { code: '    model.classifier[1].in_features, num_classes)' },
-  { code: '' },
-  { code: 'criterion = nn.CrossEntropyLoss()' },
-  { code: 'optimizer = optim.AdamW(model.parameters(),' },
-  { code: '                        lr=1e-4, weight_decay=1e-4)' },
-  { code: 'scaler = GradScaler("cuda")            # mixed precision on T4' },
-  { code: '' },
-  { code: 'for epoch in range(EPOCHS):            # EPOCHS = 50, early stop @ patience 7' },
-  { code: '    for inputs, labels in train_loader:        # batch size 32, 384x384' },
-  { code: '        optimizer.zero_grad(set_to_none=True)' },
-  { code: '        with autocast("cuda"):' },
-  { code: '            loss = criterion(model(inputs), labels)', tag: 'measure the error' },
-  { code: '        scaler.scale(loss).backward()', tag: 'learn & improve' },
-  { code: '        scaler.step(optimizer); scaler.update()' },
-  { code: '    # keep the checkpoint with the lowest validation loss', tag: 'save best' },
 ]
 
 // Plain-language, first-timer-friendly explanations of each metric column.
@@ -203,35 +180,7 @@ export default function About() {
             ))}
           </div>
 
-          <div className="mt-8 border-t border-slate-100 pt-6">
-            <h4 className="mb-1 text-sm font-semibold uppercase tracking-wider text-slate-500">
-              Core Training Loop
-            </h4>
-            <p className="mb-4 text-sm leading-relaxed text-slate-500">
-              This is the real training code. The highlighted lines point out the key step happening on each one.
-            </p>
-            <div className="overflow-x-auto rounded-2xl bg-slate-900 p-4 font-mono text-xs leading-relaxed sm:p-5 sm:text-sm">
-              <div className="min-w-max">
-                {TRAINING_CODE.map((line, index) => (
-                  <div
-                    key={index}
-                    className={`flex items-center justify-between gap-6 rounded px-2 ${
-                      line.tag
-                        ? 'border-l-2 border-emerald-400 bg-emerald-400/10'
-                        : 'border-l-2 border-transparent'
-                    }`}
-                  >
-                    <code className="whitespace-pre text-slate-100">{line.code || ' '}</code>
-                    {line.tag && (
-                      <span className="shrink-0 select-none rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">
-                        {line.tag}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <CodeExamples />
         </div>
       </div>
 

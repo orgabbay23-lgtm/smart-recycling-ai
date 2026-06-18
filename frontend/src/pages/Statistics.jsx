@@ -10,8 +10,7 @@ import {
   CalendarDays,
 } from 'lucide-react'
 import Button from '../components/Button'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL } from '../services/api'
 
 // Waste categories (matching the EfficientNetV2 model's 10 classes) paired with
 // a distinct chart colour.

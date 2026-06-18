@@ -1,5 +1,13 @@
 # ♻️ TODO — Smart Recycling and Food Waste Prevention System
 
+> ⚠️ **Historical planning checklist.** This was the original to-do list from the
+> start of the project, so some unchecked boxes are now actually done (the
+> database, scan history, history UI, and the move to EfficientNetV2-S all
+> shipped) and a few items were intentionally dropped. It's kept as a record of
+> the plan, not as the current status. For where things stand now, see
+> [`README.md`](README.md) and [`docs/`](docs/) — especially
+> [`docs/CODE_MAP.md`](docs/CODE_MAP.md).
+
 ## 🌿 Principles for This Project
 
 * [x] Keep the project simple and easy to understand

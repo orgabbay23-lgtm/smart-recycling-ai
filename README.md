@@ -43,14 +43,22 @@ It focuses on **two main tasks**:
 ## ✨ Core Features
 
 ### ♻️ Waste Classification
-The user captures an image of a waste item, and the system predicts whether it is:
+The user captures an image of a waste item, and the system predicts its category
+across **10 classes**:
 
-- Plastic
-- Glass
-- Paper
-- Metal
+- battery
+- biological
+- cardboard
+- clothes
+- glass
+- metal
+- paper
+- plastic
+- shoes
+- trash
 
-After classification, the system displays the **recommended recycling bin**.
+After classification, the system displays the **recommended recycling bin** for
+that category.
 
 ### 🥗 Food Freshness Detection
 The user captures an image of food, and the system predicts whether it is:
@@ -103,79 +111,63 @@ Frontend shows label + confidence + recommendation
 
 ---
 
-## 📌 Current MVP Scope
+## 📌 What the App Does Today
 
-The current MVP is intentionally small and focused.
+The project started as a small MVP and has since grown into a fuller demo. The
+original minimum-scope plan is preserved in [`Final MVP.md`](Final%20MVP.md) for
+history; this is where things actually stand now.
 
-### Included in the current MVP
+### Included today
 
-* Two modes:
+* **Two scan modes:** Recycle Scan and Freshness Scan
+* **Camera or file upload** in the browser, one image per scan
+* **Waste classification across 10 classes** (battery, biological, cardboard,
+  clothes, glass, metal, paper, plastic, shoes, trash)
+* **Freshness classification** (fresh / rotten) with smart food tips
+  (storage / recipe / safety) on top of the prediction
+* **Scan history** saved in a local SQLite database
+* **Statistics page** summarizing past scans
+* **Quiz game** built from labelled dataset images
+* **About page** with model explanations, accuracy, and confusion matrices
+* **Previous Versions page** comparing the baseline and final models
+* A modular **FastAPI** backend serving the models
 
-  * Recycle Scan
-  * Freshness Scan
-* Camera-based capture in the browser
-* One-image-per-scan flow
-* Waste classes:
+### Not included (out of scope)
 
-  * Plastic
-  * Glass
-  * Paper
-  * Metal
-* Freshness classes:
+* Login / user accounts
+* Cloud image storage (only a tiny thumbnail is kept for the history list)
+* "Report incorrect result" feedback loop
+* Continuous live video inference
 
-  * Fresh
-  * Rotten
-* Simple FastAPI backend with 2 prediction endpoints
-* Simple frontend pages for the demo
-
-### Not included in the current MVP
-
-* Login / authentication
-* Database
-* Scan history
-* Cloud image storage
-* Report incorrect result
-* Continuous live inference
-* Additional fruit types beyond Apple and Banana for training
-* Additional waste categories beyond the selected four classes
+> 💡 The current models are the **EfficientNetV2-S** models. The earlier
+> ResNet18 models (4 waste classes) are kept as a baseline — see
+> [`docs/MODEL_GUIDE.md`](docs/MODEL_GUIDE.md).
 
 ---
 
 ## 🗃️ Datasets
 
-The project uses publicly available image datasets relevant to the two target tasks.
+The project uses publicly available image datasets for the two tasks.
 
-### ♻️ Waste Classification Dataset
+### ♻️ Waste Classification
 
-Selected dataset:
+* **Final model (EfficientNetV2-S):** trained on
+  [Garbage Classification V2](https://www.kaggle.com/datasets/sumn2u/garbage-classification-v2)
+  (~19k images, 10 classes).
+* **Baseline model (ResNet18):** trained on a smaller balanced 4-class subset
+  (glass, metal, paper, plastic) prepared by
+  [`scripts/prepare_mvp_datasets.py`](scripts/prepare_mvp_datasets.py).
 
-* **Garbage Classification V2**
+### 🥗 Food Freshness
 
-Final MVP classes:
+* **Final model (EfficientNetV2-S):** trained on the
+  [Food Freshness Dataset](https://www.kaggle.com/datasets/ulnnproject/food-freshness-dataset)
+  (fresh vs. rotten).
+* **Baseline model (ResNet18):** trained on a balanced Apple/Banana subset of the
+  Mendeley FruitVision dataset.
 
-* Plastic
-* Glass
-* Paper
-* Metal
-
-### 🥗 Food Freshness Dataset
-
-Selected dataset:
-
-* **Mendeley FruitVision**
-
-Final MVP scope:
-
-* Fruit types used for training:
-
-  * Apple
-  * Banana
-* Final labels:
-
-  * Fresh
-  * Rotten
-
-> 📚 The processed datasets are balanced subsets prepared specifically for the MVP.
+> 📚 The large `datasets/` folder is local only (not in Git). The final models
+> were trained on Kaggle — see [`docs/MODEL_GUIDE.md`](docs/MODEL_GUIDE.md).
 
 ---
 
@@ -254,17 +246,63 @@ These components are optional and will only be added if they support the final d
 
 ```text
 smart-recycling-ai/
-├── frontend/          # React application
-├── backend/           # FastAPI application
-├── models/            # Trained model files and model-related code
-├── datasets/          # Raw and processed datasets
-├── scripts/           # Dataset preparation and future utility scripts
-├── docs/              # Project documents, notes, and diagrams
+├── frontend/      # React + Vite + Tailwind web app (the user interface)
+├── backend/       # FastAPI server: API + model inference + history database
+├── models/        # Model training code and saved model files (.pth)
+├── scripts/       # Dataset preparation & helper scripts
+├── experiments/   # Saved evaluation results for the baseline model
+├── datasets/      # Image data (local only, not in Git)
+├── docs/          # Guides: code map, demo, model, deployment, structure
 ├── README.md
+├── requirements.txt
 └── TODO.md
 ```
 
-> 🧩 The project structure is intentionally kept small, clean, and easy to understand.
+> 🧩 For a full walkthrough of every folder, see
+> [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md).
+
+---
+
+## 🚀 Run it Locally
+
+You need **Python 3.10+** and **Node.js 18+**.
+
+**One-click:** double-click `start_app.bat` (Windows) or run `./start_app.sh`
+(Mac/Linux) to start both servers at once.
+
+**Or start them by hand:**
+
+```bash
+# 1) Backend (from the project root)
+python -m venv venv
+venv\Scripts\activate          # Windows  (Mac/Linux: source venv/bin/activate)
+pip install -r requirements.txt
+python -m uvicorn backend.main:app --reload     # → http://localhost:8000
+
+# 2) Frontend (in a second terminal)
+cd frontend
+npm install
+npm run dev                     # → http://localhost:3000
+```
+
+Then open **http://localhost:3000**. The interactive API docs are at
+**http://localhost:8000/docs**.
+
+> The backend loads the EfficientNetV2 `.pth` model files from
+> `models/checkpoints/`. These are large and not stored in Git — make sure they
+> are present locally.
+
+---
+
+## 📖 Documentation
+
+| Guide | What it covers |
+|---|---|
+| [docs/CODE_MAP.md](docs/CODE_MAP.md) | "Where is this in the code?" — a feature → file lookup table |
+| [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) | How to present the project + likely questions and answers |
+| [docs/MODEL_GUIDE.md](docs/MODEL_GUIDE.md) | The current vs. baseline models, training, datasets, metrics |
+| [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) | How to put the app online (and why) |
+| [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) | A guided tour of every folder |
 
 ---
 
@@ -356,6 +394,8 @@ The project currently has a **fully functional MVP** integrating trained PyTorch
 * Built modular FastAPI backend serving the models
 * Built React + TailwindCSS frontend with browser camera integration
 * Connected full end-to-end prediction flow
+* Added scan history (SQLite), a statistics dashboard, and a quiz game
+* Added an About page and a model-comparison ("Previous Versions") page
 
 ### ⏭️ Next Steps
 

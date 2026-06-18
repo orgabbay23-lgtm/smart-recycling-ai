@@ -74,6 +74,13 @@ def record_scan(
         )
 
 
+def delete_scan(scan_id: int) -> bool:
+    """Delete a single scan by id. Returns True if a row was removed."""
+    with _connect() as conn:
+        cursor = conn.execute("DELETE FROM scan_history WHERE id = ?", (scan_id,))
+        return cursor.rowcount > 0
+
+
 def get_recent_scans(limit: int = 20) -> list[dict]:
     with _connect() as conn:
         rows = conn.execute(

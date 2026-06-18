@@ -3,8 +3,7 @@ import { Apple } from 'lucide-react'
 import ImageCapture from '../components/ImageCapture'
 import Button from '../components/Button'
 import ScanResult from '../components/ScanResult'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL } from '../services/api'
 
 export default function FreshnessScan() {
   const [image, setImage] = useState(null)

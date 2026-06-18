@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Loader2, AlertCircle, Check, X, Trophy, ArrowRight, Sparkles } from 'lucide-react'
 import Button from '../components/Button'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+import { API_URL } from '../services/api'
 
 // Bin options for waste questions. `categories` lists the dataset labels that
 // belong in each bin, so we can score an answer and explain the right one.

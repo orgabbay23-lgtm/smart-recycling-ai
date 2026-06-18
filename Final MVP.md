@@ -1,3 +1,12 @@
+> ⚠️ **Historical document.** This describes the *original* minimum-scope plan
+> from early in the project. The app has since grown well beyond it — it now has
+> 10 waste classes (not 4), an EfficientNetV2-S model, scan history, a statistics
+> page, and a quiz. For the current state see [`README.md`](README.md) and the
+> guides in [`docs/`](docs/). This file is kept only to show how the scope
+> evolved.
+
+---
+
 ## Final MVP Decision
 
 The first working version of the project will include only:
